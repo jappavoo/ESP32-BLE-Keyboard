@@ -13,7 +13,7 @@
 #include "BLEHIDDevice.h"
 #endif // USE_NIMBLE
 #include "HIDTypes.h"
-#include <driver/adc.h>
+//#include <driver/adc.h>
 #include "sdkconfig.h"
 
 
@@ -103,7 +103,7 @@ BleKeyboard::BleKeyboard(std::string deviceName, std::string deviceManufacturer,
 
 void BleKeyboard::begin(void)
 {
-  BLEDevice::init(deviceName);
+  BLEDevice::init(deviceName.c_str());
   BLEServer* pServer = BLEDevice::createServer();
   pServer->setCallbacks(this);
 
@@ -114,7 +114,7 @@ void BleKeyboard::begin(void)
 
   outputKeyboard->setCallbacks(this);
 
-  hid->manufacturer()->setValue(deviceManufacturer);
+  hid->manufacturer()->setValue(deviceManufacturer.c_str());
 
   hid->pnp(0x02, vid, pid, version);
   hid->hidInfo(0x00, 0x01);
